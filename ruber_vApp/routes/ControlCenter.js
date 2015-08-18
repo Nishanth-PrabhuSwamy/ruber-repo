@@ -4,38 +4,20 @@
 var mysql=require('mysql');
 var dataPool=require('../routes/ConnectionPooling');
 
-function connect()
-{
-	var connection = mysql.createConnection({
-		host     : 'localhost',
-		user     : 'root',
-		password : 'YES',
-		port: '3306',
-		database: 'ruber_data'
-	});
 
-	//connection.connect();
-	connection.connect(function(err, conn) {
-	    if(err) {
-	         console.log('MySQL connection error: ', err);
-	         process.exit(1);
-	    }
-
-	});
-
-	return connection;
-}
-
-function createUser(firstname,lastname,email,password,ssn,time)
+function registerIndividualUser(callback,firstname,lastname,email,phone,password,address)
 {
 	var connection = dataPool.getConnection();
 	//var connection=connect();
 
-	var query = "INSERT INTO userDetails(firstname,lastname,email,password,ssn,time) VALUES('" + firstname + "','" +lastname + "','"  + email + "','" + password + "','" + ssn + "','" + time + "')";
+	//var query1="INSERT INTO corporation"
+
+	var query = "INSERT INTO individual(ind_first_name,ind_last_name,ind_email_address,ind_phone_number,ind_password) VALUES('" + firstname + "','" +lastname + "','"  + email + "','"  + phone + "','" + password + "')";
 	console.log(query); 
 	connection.query(query,function(err,results) {
 		if (err) {
 			console.log("ERROR: " + err.message);
+			callback(err);
 		}
 		console.log(results);
 	});
@@ -272,7 +254,7 @@ function updateSellingHistory(callback,userId,product)
 	//connection.end();
 	dataPool.returnConnection(connection);
 }
-exports.createUser = createUser;
+exports.registerIndividualUser = registerIndividualUser;
 exports.validateEmailPassword=validateEmailPassword;
 exports.validateSecurity=validateSecurity;
 exports.updatePassword=updatePassword;

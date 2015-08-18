@@ -13,6 +13,9 @@ exports.RegisterCorporateUser=function(req, res){
 	res.render('registerCorporateUser', { title: 'Corporate User Registeration' });
 };
 
+exports.RegisterCorporateAdmin=function(req, res){
+	res.render('registerCorporateAdmin', { title: 'Corporate Admin Registeration' });
+};
 
 exports.RegisterIndividualUser=function(req, res){
 	res.render('registerIndividualUser',{ title: 'Individual/Freelance User Registeration' });
